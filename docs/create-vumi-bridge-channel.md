@@ -76,7 +76,7 @@ Then configure the channel in Junebug:
       "access_token": "VUMIGO_API_TOKEN",
       "redis_manager": {
         "host": "JUNEBUG_REDIS_HOST",
-        "port: "JUNEBUG_REDIS_PORT",
+        "port": "JUNEBUG_REDIS_PORT",
         "db": "JUNEBUG_REDIS_DB"
       }
     }
