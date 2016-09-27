@@ -8,6 +8,8 @@ Base image: [`praekeltfoundation/supervisor`](https://hub.docker.com/r/praekeltf
 This is a Debian Jessie base image with the latest version of Python 2 and
 Junebug and Nginx installed.
 
+### Environment variables:
+
 The environment variables that can be set are:
 
 For adding HTTP Basic Auth to the `/jb/` API endpoint:
