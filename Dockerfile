@@ -8,7 +8,6 @@ RUN pip install -q \
     vumi==0.6.10 \
     junebug==0.1.5
 
-COPY ./docker/nginx.conf /etc/supervisor/conf.d/nginx.conf
 COPY ./docker/junebug.conf /etc/supervisor/conf.d/junebug.conf
 COPY ./junebug-entrypoint.sh /scripts/
 
