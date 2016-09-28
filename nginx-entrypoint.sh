@@ -34,6 +34,8 @@ cat > $NGINX_FILE <<EOF
 location /jb/ {
   auth_basic ${AUTH_BASIC};
   auth_basic_user_file ${HTPASSWD_FILE};
+  error_log /dev/stderr;
+  access_log /dev/stdout;
   proxy_pass "http://${JUNEBUG_INTERFACE}:${JUNEBUG_PORT}/";
 }
 EOF
