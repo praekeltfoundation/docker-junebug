@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
-NGINX_FILE="./nginx.conf"
-HTPASSWD_FILE="./htpasswd"
+NGINX_FILE="/etc/nginx/includes/junebug/junebug.conf"
+HTPASSWD_FILE="/etc/supervisor/conf.d/htpasswd"
 AUTH_BASIC="off"
 JUNEBUG_INTERFACE=${JUNEBUG_INTERFACE:-0.0.0.0}
 JUNEBUG_PORT=${JUNEBUG_PORT:-8080}
@@ -28,10 +28,12 @@ else
 EOF
 fi
 
+# Ensure the directory exists
+mkdir -p $(dirname "${NGINX_FILE}")
 cat > $NGINX_FILE <<EOF
 location /jb/ {
   auth_basic ${AUTH_BASIC};
-  auth_basic_userfile ${HTPASSWD_FILE};
+  auth_basic_user_file ${HTPASSWD_FILE};
   proxy_pass "http://${JUNEBUG_INTERFACE}:${JUNEBUG_PORT}/";
 }
 EOF
