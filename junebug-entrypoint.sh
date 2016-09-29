@@ -3,7 +3,9 @@ set -e
 
 # Set up Nginx config and start Nginx
 nginx-config-gen.sh
-nginx
+nginx -g 'daemon off;' &
+# Wait a moment for Nginx to start before starting Junebug
+sleep 1
 
 JUNEBUG_INTERFACE="${JUNEBUG_INTERFACE:-0.0.0.0}"
 JUNEBUG_PORT="${JUNEBUG_PORT:-8080}"
