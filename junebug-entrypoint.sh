@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 set -e
 
+# Set up Nginx config and start Nginx
+nginx-config-gen.sh
+nginx
+
 JUNEBUG_INTERFACE="${JUNEBUG_INTERFACE:-0.0.0.0}"
 JUNEBUG_PORT="${JUNEBUG_PORT:-8080}"
 REDIS_HOST="${REDIS_HOST:-127.0.0.1}"
