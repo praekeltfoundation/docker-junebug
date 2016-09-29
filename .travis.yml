@@ -1,0 +1,10 @@
+services:
+  - docker
+language: bash
+
+script:
+  - docker-compose build
+  - docker-compose up -d && sleep 5
+  # The simplest possible test - Junebug returns 200/OK when we ask for channels
+  - curl -f http://localhost:8080/jb/channels/
+  - docker-compose down
