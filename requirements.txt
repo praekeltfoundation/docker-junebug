@@ -1,0 +1,4 @@
+junebug==0.1.5
+vumi==0.6.10
+vxyowsup==0.1.7
+yowsup2==2.4.102
