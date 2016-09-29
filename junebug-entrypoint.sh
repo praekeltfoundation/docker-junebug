@@ -35,6 +35,7 @@ exec jb \
     --plugin '{
       "type": "junebug.plugins.nginx.NginxPlugin",
       "server_name": "_",
-      "vhost_template": "/config/vhost.template"
+      "vhost_template": "/config/vhost.template",
+      "vhost_file": "/etc/nginx/conf.d/junebug.conf"
     }' \
     --logging-path .

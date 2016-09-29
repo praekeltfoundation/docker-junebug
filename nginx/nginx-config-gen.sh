@@ -28,8 +28,6 @@ else
 EOF
 fi
 
-# Ensure the directory exists
-mkdir -p $(dirname "${NGINX_FILE}")
 cat > $NGINX_FILE <<EOF
 location /jb/ {
   auth_basic ${AUTH_BASIC};
