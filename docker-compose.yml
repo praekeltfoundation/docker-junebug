@@ -1,20 +1,20 @@
 version: '2'
 services:
   junebug:
-      build: .
-      ports:
-       - "8080:80"
-      links:
-       - redis
-       - rabbitmq
-      environment:
-       REDIS_HOST: 'redis'
-       REDIS_PORT: '6379'
-       AMQP_HOST: 'rabbitmq'
-       AMQP_PORT: '5672'
+    build: .
+    ports:
+      - 8080:80
+    links:
+      - redis
+      - rabbitmq
+    environment:
+      AUTH_USERNAME: guest
+      AUTH_PASSWORD: password
+      REDIS_HOST: redis
+      AMQP_HOST: rabbitmq
   redis:
-      image: redis
+    image: redis
   rabbitmq:
-      image: rabbitmq
-      environment:
-        RABBITMQ_DEFAULT_VHOST: '/guest'
+    image: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_VHOST: /guest
