@@ -1,9 +1,8 @@
 # docker-junebug
-Dockerfile for running [Junebug](http://junebug.readthedocs.org/) with
-[Nginx](https://www.nginx.com/).
+Dockerfile for running [Junebug](http://junebug.readthedocs.org/) with [Nginx](https://www.nginx.com/).
 
 ### Details:
-Base image: [`praekeltfoundation/supervisor`](https://hub.docker.com/r/praekeltfoundation/supervisor/)
+Base image: [`praekeltfoundation/vumi`](https://hub.docker.com/r/praekeltfoundation/vumi/)
 
 This is a Debian Jessie base image with the latest version of Python 2 and
 Junebug and Nginx installed.
