@@ -10,7 +10,7 @@ fi
 IMAGE_TAG="$1"; shift
 
 # Parse the version of Junebug from the requirements file
-JUNEBUG_VERSION="$(sed -E 's/\s*junebug\s*==\s*([^\s\;]+).*/\1/' requirements.txt)"
+JUNEBUG_VERSION="$(sed -nE 's/\s*junebug\s*==\s*([^\s\;]+).*/\1/p' requirements.txt)"
 
 # Push the current tag
 docker push "$IMAGE_TAG"
