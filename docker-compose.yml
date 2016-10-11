@@ -1,6 +1,7 @@
 version: '2'
 services:
   junebug:
+    image: praekeltfoundation/junebug
     build: .
     ports:
       - 8080:80
