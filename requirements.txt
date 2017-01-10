@@ -1,3 +1,3 @@
-junebug==0.1.6
+junebug==0.1.7
 vxyowsup==0.1.8
 yowsup2==2.5.0
