@@ -1,4 +1,4 @@
 junebug==0.1.11
 vxyowsup==0.1.8
 yowsup2==2.5.2
-vxaat==0.5.4
+vxaat==0.5.5
