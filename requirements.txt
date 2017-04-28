@@ -2,4 +2,4 @@ junebug==0.1.14
 vxyowsup==0.1.8
 yowsup2==2.5.2
 vxaat==0.5.5
-vumi_msisdn_normalize_middleware==0.1.1
+vumi-msisdn-normalize-middleware==0.1.2
