@@ -1,0 +1,21 @@
+version: '2'
+services:
+  junebug:
+    image: praekeltfoundation/junebug
+    build: .
+    ports:
+      - 8080:80
+    links:
+      - redis
+      - rabbitmq
+    environment:
+      AUTH_USERNAME: guest
+      AUTH_PASSWORD: password
+      REDIS_HOST: redis
+      AMQP_HOST: rabbitmq
+  redis:
+    image: redis
+  rabbitmq:
+    image: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_VHOST: /guest
