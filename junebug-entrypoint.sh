@@ -43,3 +43,4 @@ exec jb \
       "vhost_file": "/etc/nginx/conf.d/junebug.conf"
     }' \
     --logging-path .
+    --sentry-dsn "$SENTRY_DSN"
