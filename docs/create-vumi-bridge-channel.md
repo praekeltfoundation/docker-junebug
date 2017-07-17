@@ -47,9 +47,9 @@ First read the Junebug [channel creation documentation](http://junebug.readthedo
 
 Then configure the channel in Junebug:
 
-* If your application will receive messages from Junebug over HTTP, determine
-  the `MO_URL` (URL for receiving MO messages). Otherwise leave this
-  parameters out.
+* If your application will receive messages from Junebug over HTTP, set
+  `MO_URL` to the URL where your app receives mobile-originated (MO) messages.
+  If not, you can leave this parameter out.
 * If your application is sending and receiving messages from Junebug over AMQP
   check that your application is connected to the same RabbitMQ Vhost as
   Junebug and determine the `AMQP_QUEUE` connector the application and Junebug
