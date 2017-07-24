@@ -7,7 +7,7 @@ DEFAULT_CHANNELS=(
     'dmark_ussd:vumi.transports.dmark.DmarkUssdTransport'
     'aat_ussd:vxaat.AatUssdTransport'
 )
-DEFAULT_PLUGIN='{
+NGINX_PLUGIN='{
     "type": "junebug.plugins.nginx.NginxPlugin",
     "server_name": "_",
     "vhost_template": "/config/vhost.template",
@@ -62,7 +62,7 @@ if [ "$1" = 'jb' ]; then
         set -- "$@" --channels "$channel"
     done
     set -- "$@" \
-        --plugin "$DEFAULT_PLUGIN"
+        --plugin "$NGINX_PLUGIN"
         --logging-path .
 fi
 
