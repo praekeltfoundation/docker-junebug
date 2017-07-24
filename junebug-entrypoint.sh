@@ -1,46 +1,69 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 set -e
 
-# Set up Nginx config and start Nginx
-nginx-config-gen.sh
-nginx -g 'daemon off;' &
-# Wait a moment for Nginx to start before starting Junebug
-sleep 1
+DEFAULT_CHANNELS=(
+    'whatsapp:vxyowsup.whatsapp.WhatsAppTransport'
+    'vumigo:vumi.transports.vumi_bridge.GoConversationTransport'
+    'dmark_ussd:vumi.transports.dmark.DmarkUssdTransport'
+    'aat_ussd:vxaat.AatUssdTransport'
+)
+DEFAULT_PLUGIN='{
+    "type": "junebug.plugins.nginx.NginxPlugin",
+    "server_name": "_",
+    "vhost_template": "/config/vhost.template",
+    "vhost_file": "/etc/nginx/conf.d/junebug.conf"
+}'
 
-JUNEBUG_INTERFACE="${JUNEBUG_INTERFACE:-0.0.0.0}"
-JUNEBUG_PORT="${JUNEBUG_PORT:-8080}"
-REDIS_HOST="${REDIS_HOST:-127.0.0.1}"
-REDIS_PORT="${REDIS_PORT:-6379}"
-REDIS_DB="${REDIS_DB:-1}"
-AMQP_HOST="${AMQP_HOST:-127.0.0.1}"
-AMQP_VHOST="${AMQP_VHOST:-/guest}"
-AMQP_PORT="${AMQP_PORT:-5672}"
-AMQP_USER="${AMQP_USER:-guest}"
-AMQP_PASSWORD="${AMQP_PASSWORD:-guest}"
+if [ $# -eq 0 ] || [ "${1#-}" != "$1" ]; then
+    set -- jb "$@"
+fi
 
-echo "Starting Junebug with redis://$REDIS_HOST:$REDIS_PORT/$REDIS_DB and \
-amqp://$AMQP_USER:$AMQP_PASSWORD@$AMQP_HOST:$AMQP_PORT/$AMQP_VHOST"
+if [ "$1" = 'jb' ]; then
+    # Set up Nginx config and start Nginx
+    nginx-config-gen.sh
+    nginx -g 'daemon off;' &
+    # Wait a moment for Nginx to start before starting Junebug
+    sleep 1
 
-exec jb \
-    --interface "$JUNEBUG_INTERFACE" \
-    --port "$JUNEBUG_PORT" \
-    --redis-host "$REDIS_HOST" \
-    --redis-port "$REDIS_PORT" \
-    --redis-db "$REDIS_DB" \
-    --amqp-host "$AMQP_HOST" \
-    --amqp-port "$AMQP_PORT" \
-    --amqp-vhost "$AMQP_VHOST" \
-    --amqp-user "$AMQP_USER" \
-    --amqp-password "$AMQP_PASSWORD" \
-    --channels whatsapp:vxyowsup.whatsapp.WhatsAppTransport \
-    --channels vumigo:vumi.transports.vumi_bridge.GoConversationTransport \
-    --channels dmark_ussd:vumi.transports.dmark.DmarkUssdTransport \
-    --channels aat_ussd:vxaat.AatUssdTransport \
-    --plugin '{
-      "type": "junebug.plugins.nginx.NginxPlugin",
-      "server_name": "_",
-      "vhost_template": "/config/vhost.template",
-      "vhost_file": "/etc/nginx/conf.d/junebug.conf"
-    }' \
-    --logging-path . \
-    --sentry-dsn "$SENTRY_DSN"
+    # By default Junebug listens on localhost, choose a better default
+    set -- "$@" \
+        --interface "${JUNEBUG_INTERFACE:-0.0.0.0}" \
+        --port "${JUNEBUG_PORT:-8080}"
+
+    # Redis
+    if [ -n "$REDIS_HOST" ]; then
+        set -- "$@" \
+            --redis-host "$REDIS_HOST" \
+            --redis-port "${REDIS_PORT:-6379}" \
+            --redis-db "${REDIS_DB:-1}"
+        echo "Redis configured from environment variables as \
+            'redis://$REDIS_HOST:$REDIS_PORT/$REDIS_DB'"
+    fi
+
+    # AMQP
+    if [ -n "$AMQP_HOST" ]; then
+        set -- "$@" \
+            --amqp-host "$AMQP_HOST" \
+            --amqp-port "${AMQP_PORT:-5672}" \
+            --amqp-vhost "${AMQP_VHOST:-/guest}" \
+            --amqp-user "${AMQP_USER:-guest}" \
+            --amqp-password "${AMQP_PASSWORD:-guest}"
+        echo "AMQP configured from environment variables as \
+            'amqp://$AMQP_USER:$AMQP_PASSWORD@$AMQP_HOST:$AMQP_PORT/$AMQP_VHOST'"
+    fi
+
+    # Sentry
+    if [ -n "$SENTRY_DSN" ]; then
+        set -- "$@" --sentry-dsn "$SENTRY_DSN"
+    fi
+
+    # Set all the other defaults
+    for channel in "${DEFAULT_CHANNELS[@]}"; do
+        set -- "$@" --channels "$channel"
+    done
+    set -- "$@" \
+        --plugin "$DEFAULT_PLUGIN"
+        --logging-path .
+fi
+
+exec "$@"
