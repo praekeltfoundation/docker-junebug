@@ -13,8 +13,9 @@ install: [] # Don't do a pip install (default for Travis Python environment)
 before_script:
   - version="$(sed -nE 's/^junebug==([0-9\.]+)/\1/p' requirements.txt)"
   - echo "Building image for Junebug version '$version'..."
+  - docker pull "$IMAGE_NAME" || true
 script:
-  - docker build --tag "$IMAGE_NAME" .
+  - docker build --pull --cache-from "$IMAGE_NAME" --tag "$IMAGE_NAME" .
   - docker-compose up -d && sleep 5
   # The simplest possible test - Junebug returns 200/OK when we ask for channels
   - curl -f --user guest:password http://localhost/jb/channels/
