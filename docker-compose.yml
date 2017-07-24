@@ -5,9 +5,6 @@ services:
     build: .
     ports:
       - 8080:80
-    links:
-      - redis
-      - rabbitmq
     environment:
       AUTH_USERNAME: guest
       AUTH_PASSWORD: password
