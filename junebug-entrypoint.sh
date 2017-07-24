@@ -28,7 +28,7 @@ if [ "$1" = 'jb' ]; then
     # Listening interface
     if [ -n "$JUNEBUG_INTERFACE" ]; then
         set -- "$@" \
-            --interface "${JUNEBUG_INTERFACE:-127.0.0.1}" \
+            --interface "$JUNEBUG_INTERFACE" \
             --port "${JUNEBUG_PORT:-8080}"
     fi
 
