@@ -1,12 +1,12 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 set -e
 
-DEFAULT_CHANNELS=(
-    'whatsapp:vxyowsup.whatsapp.WhatsAppTransport'
-    'vumigo:vumi.transports.vumi_bridge.GoConversationTransport'
-    'dmark_ussd:vumi.transports.dmark.DmarkUssdTransport'
-    'aat_ussd:vxaat.AatUssdTransport'
-)
+DEFAULT_CHANNELS='
+    whatsapp:vxyowsup.whatsapp.WhatsAppTransport
+    vumigo:vumi.transports.vumi_bridge.GoConversationTransport
+    dmark_ussd:vumi.transports.dmark.DmarkUssdTransport
+    aat_ussd:vxaat.AatUssdTransport
+'
 NGINX_PLUGIN='{
     "type": "junebug.plugins.nginx.NginxPlugin",
     "server_name": "_",
@@ -60,7 +60,7 @@ if [ "$1" = 'jb' ]; then
     fi
 
     # Set all the other defaults
-    for channel in "${DEFAULT_CHANNELS[@]}"; do
+    for channel in $DEFAULT_CHANNELS; do
         set -- "$@" --channels "$channel"
     done
     set -- "$@" \
