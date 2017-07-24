@@ -25,10 +25,12 @@ if [ "$1" = 'jb' ]; then
     # Wait a moment for Nginx to start before starting Junebug
     sleep 1
 
-    # By default Junebug listens on localhost, choose a better default
-    set -- "$@" \
-        --interface "${JUNEBUG_INTERFACE:-0.0.0.0}" \
-        --port "${JUNEBUG_PORT:-8080}"
+    # Listening interface
+    if [ -n "$JUNEBUG_INTERFACE" ]; then
+        set -- "$@" \
+            --interface "${JUNEBUG_INTERFACE:-127.0.0.1}" \
+            --port "${JUNEBUG_PORT:-8080}"
+    fi
 
     # Redis
     if [ -n "$REDIS_HOST" ]; then

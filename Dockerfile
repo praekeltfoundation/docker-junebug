@@ -20,6 +20,6 @@ COPY junebug-entrypoint.sh nginx/nginx-config-gen.sh \
 
 COPY nginx/vhost.template /config/
 
-EXPOSE 80 8080
+EXPOSE 80
 
 ENTRYPOINT ["tini", "--", "junebug-entrypoint.sh"]

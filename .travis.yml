@@ -16,7 +16,7 @@ script:
   - docker build --tag "$IMAGE_NAME" .
   - docker-compose up -d && sleep 5
   # The simplest possible test - Junebug returns 200/OK when we ask for channels
-  - curl -f --user guest:password http://localhost:8080/jb/channels/
+  - curl -f --user guest:password http://localhost/jb/channels/
   - docker-compose down
 
 before_deploy:

@@ -4,7 +4,7 @@ set -e
 NGINX_FILE="/etc/nginx/includes/junebug/junebug.conf"
 HTPASSWD_FILE="/config/htpasswd"
 AUTH_BASIC="off"
-JUNEBUG_INTERFACE="${JUNEBUG_INTERFACE:-0.0.0.0}"
+JUNEBUG_INTERFACE="${JUNEBUG_INTERFACE:-127.0.0.1}"
 JUNEBUG_PORT="${JUNEBUG_PORT:-8080}"
 
 if [ -n "$AUTH_USERNAME" ] && [ -n "$AUTH_PASSWORD" ]; then
