@@ -1,23 +1,29 @@
 services:
   - docker
-language: bash
+language: python
 
 env:
   global:
+    - IMAGE_NAME=praekeltfoundation/junebug
     - REGISTRY_USER=praekeltorgdeploy
     - secure: "b6edRlN/D6k7Vqm3LGti9khu2zNV+BvQKQigBmzpTsjq/C2W1m82WN/+95Ck91jogFGPWndz+L6NKi1t1SefVHhJAvz8rC7drF7b1KcOx3fA8HVvkCsqOX3YEl27dCTA6TDna4decW3A+5MQn6l11ksIVPArRux9jLKPRbUUAsauUTYPZYQ7LaUXA/rW7IQWDegoGTUW0CXJwtT8xhrnmw814tG5j5DRPh4RXfw9uitCuBu2k6/g3fus2eX8FGZUzznLCqul4ruXECuIOFk+WZ4f3q3rauVy5CQsjleTJB3Iz+RiH9zRXZYmJVGr8gSoVCgdF3Bg1FBMeK1SRd7BjPPzV4XI8PgduDNwgXM4iBx7QJt8GM0ygYJWBN/mKZ8q4bGAD3bfPMemgPJmvJXPxhX/obEJb+3epbTq3I7iaF4+AgszZszBz62hmNtdpRCmXhZftcKTLnIcoEUfNxkYTlS78xcCv6rbsDHLf0O07WlRBE3pSJNhnwwykBVsAhEx3MFvxrVu6X3ut+/FEGky6vtN8GD1O/ibIfzw/C7d1uyGpjp/vvKDTOHb/oB8qj3ptql1KRHZIBWh5ZeUyblLH8k4cPKbk+PjJFqMhF72MgTdMzcKls1CrV/2VMnp//c8wAgDQN3e2aehkswqvu3rffWT9yxJg6EdHTITldJ9eJg="
 
+install: [] # Don't do a pip install (default for Travis Python environment)
+
+before_script:
+  - version="$(sed -nE 's/^junebug==([[0-9]\.]+)/\1/p' requirements.txt)"
 script:
-  - docker build --tag praekeltfoundation/junebug .
+  - docker build --tag "$IMAGE_NAME" .
   - docker-compose up -d && sleep 5
   # The simplest possible test - Junebug returns 200/OK when we ask for channels
   - curl -f --user guest:password http://localhost:8080/jb/channels/
   - docker-compose down
 
 before_deploy:
+  - pip install docker-ci-deploy==0.3.0
   - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 deploy:
   provider: script
-  script: ./deploy.sh praekeltfoundation/junebug
+  script: dcd --version "$version" --version-latest "$IMAGE_NAME"
   on:
     branch: develop
