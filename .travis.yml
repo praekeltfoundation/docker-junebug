@@ -26,4 +26,4 @@ deploy:
   provider: script
   script: dcd --version "$version" --version-latest "$IMAGE_NAME"
   on:
-    branch: develop
+    branch: master
