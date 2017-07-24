@@ -1,4 +1,9 @@
 # docker-junebug
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/praekeltfoundation/junebug.svg)](https://hub.docker.com/r/praekeltfoundation/junebug/)
+[![Build Status](https://travis-ci.org/praekeltfoundation/docker-junebug.svg?branch=master)](https://travis-ci.org/praekeltfoundation/docker-junebug)
+[![Requirements Status](https://pyup.io/repos/github/praekeltfoundation/docker-junebug/shield.svg)](https://pyup.io/repos/github/praekeltfoundation/docker-junebug/)
+
 Dockerfile for running [Junebug](http://junebug.readthedocs.org/) with [Nginx](https://www.nginx.com/).
 
 ### Details:
