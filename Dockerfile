@@ -12,9 +12,6 @@ RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC64107
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-# Install libjpeg for yowsup
-RUN apt-get-install.sh libjpeg62
-
 COPY requirements.txt /requirements.txt
 RUN pip install -r /requirements.txt
 
