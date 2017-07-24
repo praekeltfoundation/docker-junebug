@@ -11,7 +11,8 @@ env:
 install: [] # Don't do a pip install (default for Travis Python environment)
 
 before_script:
-  - version="$(sed -nE 's/^junebug==([[0-9]\.]+)/\1/p' requirements.txt)"
+  - version="$(sed -nE 's/^junebug==([0-9\.]+)/\1/p' requirements.txt)"
+  - echo "Building image for Junebug version '$version'..."
 script:
   - docker build --tag "$IMAGE_NAME" .
   - docker-compose up -d && sleep 5
