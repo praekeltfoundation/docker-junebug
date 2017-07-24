@@ -36,8 +36,8 @@ if [ "$1" = 'jb' ]; then
     if [ -n "$REDIS_HOST" ]; then
         set -- "$@" \
             --redis-host "$REDIS_HOST" \
-            --redis-port "${REDIS_PORT:-6379}" \
-            --redis-db "${REDIS_DB:-1}"
+            --redis-port "${REDIS_PORT:=6379}" \
+            --redis-db "${REDIS_DB:=1}"
         echo "Redis configured from environment variables as \
             'redis://$REDIS_HOST:$REDIS_PORT/$REDIS_DB'"
     fi
@@ -46,10 +46,10 @@ if [ "$1" = 'jb' ]; then
     if [ -n "$AMQP_HOST" ]; then
         set -- "$@" \
             --amqp-host "$AMQP_HOST" \
-            --amqp-port "${AMQP_PORT:-5672}" \
-            --amqp-vhost "${AMQP_VHOST:-/guest}" \
-            --amqp-user "${AMQP_USER:-guest}" \
-            --amqp-password "${AMQP_PASSWORD:-guest}"
+            --amqp-port "${AMQP_PORT:=5672}" \
+            --amqp-vhost "${AMQP_VHOST:=/guest}" \
+            --amqp-user "${AMQP_USER:=guest}" \
+            --amqp-password "${AMQP_PASSWORD:=guest}"
         echo "AMQP configured from environment variables as \
             'amqp://$AMQP_USER:$AMQP_PASSWORD@$AMQP_HOST:$AMQP_PORT/$AMQP_VHOST'"
     fi
