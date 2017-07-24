@@ -64,7 +64,7 @@ if [ "$1" = 'jb' ]; then
         set -- "$@" --channels "$channel"
     done
     set -- "$@" \
-        --plugin "$NGINX_PLUGIN"
+        --plugin "$NGINX_PLUGIN" \
         --logging-path .
 fi
 
