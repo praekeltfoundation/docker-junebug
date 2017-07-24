@@ -1,5 +1,4 @@
 FROM praekeltfoundation/vumi
-MAINTAINER Praekelt Foundation <dev@praekeltfoundation.org>
 
 # Install a modern Nginx
 ENV NGINX_VERSION 1.12.1-1~jessie
