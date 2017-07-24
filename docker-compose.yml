@@ -11,8 +11,8 @@ services:
       REDIS_HOST: redis
       AMQP_HOST: rabbitmq
   redis:
-    image: redis
+    image: redis:alpine
   rabbitmq:
-    image: rabbitmq
+    image: rabbitmq:alpine
     environment:
       RABBITMQ_DEFAULT_VHOST: /guest
