@@ -21,6 +21,6 @@ COPY nginx/vhost.template /config/
 RUN rm /etc/nginx/conf.d/default.conf \
     && mkdir -p /etc/nginx/includes/junebug
 
-EXPOSE 80
+EXPOSE 80 8080
 
 ENTRYPOINT ["tini", "--", "junebug-entrypoint.sh"]
