@@ -38,8 +38,8 @@ if [ "$1" = 'jb' ]; then
             --redis-host "$REDIS_HOST" \
             --redis-port "${REDIS_PORT:=6379}" \
             --redis-db "${REDIS_DB:=1}"
-        echo "Redis configured from environment variables as \
-            'redis://$REDIS_HOST:$REDIS_PORT/$REDIS_DB'"
+        echo 'Redis configured from environment variables as'\
+            "'redis://$REDIS_HOST:$REDIS_PORT/$REDIS_DB'"
     fi
 
     # AMQP
@@ -50,8 +50,8 @@ if [ "$1" = 'jb' ]; then
             --amqp-vhost "${AMQP_VHOST:=/guest}" \
             --amqp-user "${AMQP_USER:=guest}" \
             --amqp-password "${AMQP_PASSWORD:=guest}"
-        echo "AMQP configured from environment variables as \
-            'amqp://$AMQP_USER:$AMQP_PASSWORD@$AMQP_HOST:$AMQP_PORT/$AMQP_VHOST'"
+        echo 'AMQP configured from environment variables as'\
+            "'amqp://$AMQP_USER:$AMQP_PASSWORD@$AMQP_HOST:$AMQP_PORT/$AMQP_VHOST'"
     fi
 
     # Sentry
