@@ -22,4 +22,4 @@ COPY nginx/vhost.template /config/
 
 EXPOSE 80
 
-ENTRYPOINT ["dinit", "--", "junebug-entrypoint.sh"]
+ENTRYPOINT ["tini", "--", "junebug-entrypoint.sh"]
