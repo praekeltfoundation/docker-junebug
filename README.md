@@ -1,36 +1,69 @@
 # docker-junebug
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/praekeltfoundation/junebug.svg)](https://hub.docker.com/r/praekeltfoundation/junebug/)
+[![Build Status](https://travis-ci.org/praekeltfoundation/docker-junebug.svg?branch=master)](https://travis-ci.org/praekeltfoundation/docker-junebug)
+[![Requirements Status](https://pyup.io/repos/github/praekeltfoundation/docker-junebug/shield.svg)](https://pyup.io/repos/github/praekeltfoundation/docker-junebug/)
+
 Dockerfile for running [Junebug](http://junebug.readthedocs.org/) with [Nginx](https://www.nginx.com/).
 
-### Details:
+## Details:
 Base image: [`praekeltfoundation/vumi`](https://hub.docker.com/r/praekeltfoundation/vumi/)
 
 This is a Debian Jessie base image with the latest version of Python 2 and
 Junebug and Nginx installed.
 
-### Environment variables:
+## Configuration:
+Configuration can be done using environment variables or command-line options. Use of environment variables and command-line options can be mixed, but using an environment variable at the same time as it's equivalent command-line option can result in unexpected behaviour.
 
-The environment variables that can be set are:
+Two environment variables **should always be set** to enable HTTP basic auth for the Junebug API on the `/jb/` path:
+- `AUTH_USERNAME`
+- `AUTH_PASSWORD`
 
-For adding HTTP Basic Auth to the `/jb/` API endpoint:
+### Command-line options
+Most of Junebug's command-line options can be passed to the container at startup. For example:
+```
+docker run \
+  -e AUTH_USERNAME=user -e AUTH_PASSWORD=secret \
+  praekeltfoundation/junebug \
+    --redis-host redis0.internal \
+    --redis-db 2 \
+    --amqp-host rabbitmq0.internal \
+    --amqp-vhost /junebug \
+    --amqp-user rabbit \
+    --amqp-password carrot
+```
 
-- **AUTH_USERNAME**
-- **AUTH_PASSWORD**
+The following command-line options are **always set** by the entrypoint script:
+- `--logging-path` is set to `.` to ensure Junebug logs to stdout/stderr.
+- `--plugins` is provided to set up the Nginx plugin.
+- `--channels` is provided to set up the following default channels:
+  - `whatsapp:vxyowsup.whatsapp.WhatsAppTransport`
+  - `vumigo:vumi.transports.vumi_bridge.GoConversationTransport`
+  - `dmark_ussd:vumi.transports.dmark.DmarkUssdTransport`
+  - `aat_ussd:vxaat.AatUssdTransport`
 
-For configuring Junebug:
+### Environment variables
+Several environment variables can be adjusted to configure Junebug. These variables map to command-line options in the entrypoint script as follows:
 
-- **JUNEBUG_INTERFACE** defaults to `0.0.0.0`
-- **JUNEBUG_PORT** defaults to `8080`
-- **REDIS_HOST** defaults to `127.0.0.1`
-- **REDIS_PORT** defaults to `6379`
-- **REDIS_DB** defaults to `1`
-- **AMQP_HOST** defaults to `127.0.0.1`
-- **AMQP_VHOST** defaults to `guest`
-- **AMQP_PORT** defaults to `5672`
-- **AMQP_USER** defaults to `guest`
-- **AMQP_PASSWORD** defaults to `guest`
+| Environment variable | Command-line option | Default value |
+|----------------------|---------------------|---------------|
+| `JUNEBUG_INTERFACE`  | `--interface`       |               |
+| `JUNEBUG_PORT`       | `--port`            | `8080`        |
+| `REDIS_HOST`         | `--redis-host`      |               |
+| `REDIS_PORT`         | `--redis-port`      | `6379`        |
+| `REDIS_DB`           | `--redis-db`        | `1`           |
+| `AMQP_HOST`          | `--amqp-host`       |               |
+| `AMQP_PORT`          | `--amqp-port`       | `5679`        |
+| `AMQP_VHOST`         | `--amqp-vhost`      | `guest`       |
+| `AMQP_USER`          | `--amqp-user`       | `guest`       |
+| `AMQP_PASSWORD`      | `--amqp-password`   | `guest`       |
+| `SENTRY_DSN`         | `--sentry-dsn`      |               |
 
+For the Redis and AMQP configuration, it is necessary to set the `_HOST` variables before the other environment variables will be considered.
 
-### Usage:
+Similarly, the `JUNEBUG_INTERFACE` variable must be set before the `JUNEBUG_PORT` variable is used. However, it is *not recommended* that you change the `--interface` or `--port` options as all communication with Junebug should be performed via the Nginx instance in the container.
+
+## Usage:
 
 * [Set up Junebug in Mission Control](docs/set-up-junebug-in-mc.md)
 * [Create a Vumi Bridge channel](docs/create-vumi-bridge-channel.md)
