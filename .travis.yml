@@ -20,7 +20,7 @@ before_script:
   - echo "Building image '$image_tag' from dockerfile '$dockerfile' for Junebug version '$version'..."
   - docker pull "$image_tag" || true
 script:
-  - docker build --pull --cache-from "$image_tag" --tag "$image_tag" .
+  - docker build --pull --cache-from "$image_tag" --file "$dockerfile" --tag "$image_tag" .
   - docker-compose up -d && sleep 5
   # The simplest possible test - Junebug returns 200/OK when we ask for channels
   - curl -f --user guest:password http://localhost:8080/jb/channels/
