@@ -8,6 +8,9 @@ RUN apk add --no-cache libressl
 ENV NGINX_VERSION 1.12.1-r0
 RUN set -ex; \
     apk add --no-cache "nginx=$NGINX_VERSION"; \
+# Workaround for bug in Alpine Nginx package :-/
+# https://github.com/gliderlabs/docker-alpine/issues/185
+    mkdir /run/nginx; \
 # Delete default server
     rm /etc/nginx/conf.d/default.conf; \
 # Create directories for Junebug frontends/upstreams
