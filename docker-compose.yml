@@ -1,8 +1,10 @@
 version: '2'
 services:
   junebug:
-    image: praekeltfoundation/junebug
-    build: .
+    image: "${JUNEBUG_IMAGE:-praekeltfoundation/junebug}"
+    build:
+      context: .
+      dockerfile: "${JUNEBUG_DOCKERFILE:-Dockerfile}"
     ports:
       - 8080:80
     environment:

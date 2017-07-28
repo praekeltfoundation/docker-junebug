@@ -21,10 +21,10 @@ before_script:
   - docker pull "$image_tag" || true
 script:
   - docker build --pull --cache-from "$image_tag" --file "$dockerfile" --tag "$image_tag" .
-  - docker-compose up -d && sleep 5
+  - JUNEBUG_IMAGE="$image_tag" docker-compose up --no-build -d && sleep 5
   # The simplest possible test - Junebug returns 200/OK when we ask for channels
   - curl -f --user guest:password http://localhost:8080/jb/channels/
-  - docker-compose down
+  - JUNEBUG_IMAGE="$image_tag" docker-compose down
 after_script:
   - docker images
 
