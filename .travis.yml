@@ -25,6 +25,8 @@ script:
   # The simplest possible test - Junebug returns 200/OK when we ask for channels
   - curl -f --user guest:password http://localhost:8080/jb/channels/
   - docker-compose down
+after_script:
+  - docker images
 
 before_deploy:
   - pip install docker-ci-deploy==0.3.0
