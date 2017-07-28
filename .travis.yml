@@ -31,6 +31,6 @@ before_deploy:
   - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
 deploy:
   provider: script
-  script: dcd --version "$version" --version-latest "$image_tag"
+  script: dcd --version "$version" --version-latest --version-semver "$image_tag"
   on:
     branch: master
