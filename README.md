@@ -45,19 +45,20 @@ The following command-line options are **always set** by the entrypoint script:
 ### Environment variables
 Several environment variables can be adjusted to configure Junebug. These variables map to command-line options in the entrypoint script as follows:
 
-| Environment variable | Command-line option | Default value |
-|----------------------|---------------------|---------------|
-| `JUNEBUG_INTERFACE`  | `--interface`       |               |
-| `JUNEBUG_PORT`       | `--port`            | `8080`        |
-| `REDIS_HOST`         | `--redis-host`      |               |
-| `REDIS_PORT`         | `--redis-port`      | `6379`        |
-| `REDIS_DB`           | `--redis-db`        | `1`           |
-| `AMQP_HOST`          | `--amqp-host`       |               |
-| `AMQP_PORT`          | `--amqp-port`       | `5679`        |
-| `AMQP_VHOST`         | `--amqp-vhost`      | `guest`       |
-| `AMQP_USER`          | `--amqp-user`       | `guest`       |
-| `AMQP_PASSWORD`      | `--amqp-password`   | `guest`       |
-| `SENTRY_DSN`         | `--sentry-dsn`      |               |
+| Environment variable    | Command-line option       | Default value |
+|-------------------------|---------------------------|---------------|
+| `JUNEBUG_INTERFACE`     | `--interface`             |               |
+| `JUNEBUG_PORT`          | `--port`                  | `8080`        |
+| `REDIS_HOST`            | `--redis-host`            |               |
+| `REDIS_PORT`            | `--redis-port`            | `6379`        |
+| `REDIS_DB`              | `--redis-db`              | `1`           |
+| `AMQP_HOST`             | `--amqp-host`             |               |
+| `AMQP_PORT`             | `--amqp-port`             | `5679`        |
+| `AMQP_VHOST`            | `--amqp-vhost`            | `guest`       |
+| `AMQP_USER`             | `--amqp-user`             | `guest`       |
+| `AMQP_PASSWORD`         | `--amqp-password`         | `guest`       |
+| `SENTRY_DSN`            | `--sentry-dsn`            |               |
+| `ALLOW_EXPIRED_REPLIES` | `--allow-expired-replies` |               |
 
 For the Redis and AMQP configuration, it is necessary to set the `_HOST` variables before the other environment variables will be considered.
 
