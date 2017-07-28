@@ -1,11 +1,16 @@
-FROM praekeltfoundation/vumi
+FROM praekeltfoundation/vumi:alpine
 
-# Install a modern Nginx
-ENV NGINX_VERSION 1.12.1-1~jessie
+# Need an OpenSSL thing to generate htpasswd files. This adds <1MB
+RUN apk add --no-cache libressl
+
+# We don't have the same choice of Nginx versions we have in Debian, but we
+# should specify the package version so we can update if necessary.
+ENV NGINX_VERSION 1.12.1-r0
 RUN set -ex; \
-    apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62; \
-    echo 'deb http://nginx.org/packages/debian/ jessie nginx' > /etc/apt/sources.list.d/nginx.list; \
-    apt-get-install.sh "nginx=$NGINX_VERSION"; \
+    apk add --no-cache "nginx=$NGINX_VERSION"; \
+# Workaround for bug in Alpine Nginx package :-/
+# https://github.com/gliderlabs/docker-alpine/issues/185
+    mkdir /run/nginx; \
 # Delete default server
     rm /etc/nginx/conf.d/default.conf; \
 # Create directories for Junebug frontends/upstreams

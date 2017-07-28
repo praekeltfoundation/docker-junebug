@@ -9,8 +9,11 @@ Dockerfile for running [Junebug](http://junebug.readthedocs.org/) with [Nginx](h
 ## Details:
 Base image: [`praekeltfoundation/vumi`](https://hub.docker.com/r/praekeltfoundation/vumi/)
 
-This is a Debian Jessie base image with the latest version of Python 2 and
-Junebug and Nginx installed.
+Two images are available:
+* `praekeltfoundation/junebug:latest`: based on Debian Jessie
+* `praekeltfoundation/junebug:alpine`: based on Alpine Linux 3.6
+
+The latest stable versions of Junebug and Nginx are installed in these images.
 
 ## Configuration:
 Configuration can be done using environment variables or command-line options. Use of environment variables and command-line options can be mixed, but using an environment variable at the same time as it's equivalent command-line option can result in unexpected behaviour.
