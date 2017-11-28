@@ -20,6 +20,9 @@
   - AMQP_VHOST
   - AMQP_USER
   - AMQP_PASSWORD
+* To get more info on the health endpoint for each RabbitMQ queue, you can set
+  the `RABBITMQ_MANAGEMENT_INTERFACE` environment variable. It will return a
+  500 if there are any queues stuck. This is only available for RabbitMQ.
 * Save your app.
 * Check the logs to make sure it started okay.
 * Click on "view" to see the domain name your app is listening on.

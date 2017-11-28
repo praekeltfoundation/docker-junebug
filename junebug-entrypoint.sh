@@ -54,6 +54,11 @@ if [ "$1" = 'jb' ]; then
             "'amqp://$AMQP_USER:$AMQP_PASSWORD@$AMQP_HOST:$AMQP_PORT/$AMQP_VHOST'"
     fi
 
+    # RABBITMQ MANAGEMENT INTERFACE
+    if [ -n "$RABBITMQ_MANAGEMENT_INTERFACE" ]; then
+        set -- "$@" --rabbitmq-management-interface "$RABBITMQ_MANAGEMENT_INTERFACE"
+    fi
+
     # Sentry
     if [ -n "$SENTRY_DSN" ]; then
         set -- "$@" --sentry-dsn "$SENTRY_DSN"
