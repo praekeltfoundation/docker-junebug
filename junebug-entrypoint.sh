@@ -64,6 +64,11 @@ if [ "$1" = 'jb' ]; then
         set -- "$@" --sentry-dsn "$SENTRY_DSN"
     fi
 
+    # Allow expired replies
+    if [ -n "$ALLOW_EXPIRED_REPLIES" ]; then
+        set -- "$@" --allow-expired-replies
+    fi
+
     # Set all the other defaults
     for channel in $DEFAULT_CHANNELS; do
         set -- "$@" --channels "$channel"

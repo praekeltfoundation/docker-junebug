@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 set -e
 
 NGINX_FILE="/etc/nginx/includes/junebug/junebug.conf"
