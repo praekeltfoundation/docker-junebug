@@ -24,6 +24,7 @@ script:
   - JUNEBUG_IMAGE="$image_tag" docker-compose up --no-build -d && sleep 5
   # The simplest possible test - Junebug returns 200/OK when we ask for channels
   - curl -f --user guest:password http://localhost:8080/jb/channels/
+  - curl -f http://localhost:8080/jb/health
   - JUNEBUG_IMAGE="$image_tag" docker-compose down
 after_script:
   - docker images
