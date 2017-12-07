@@ -36,3 +36,10 @@ location /jb/ {
   proxy_pass http://${JUNEBUG_INTERFACE}:${JUNEBUG_PORT}/;
 }
 EOF
+
+cat > "$NGINX_FILE" <<EOF
+location /jb/health {
+  auth_basic off;
+  proxy_pass http://${JUNEBUG_INTERFACE}:${JUNEBUG_PORT}/;
+}
+EOF
