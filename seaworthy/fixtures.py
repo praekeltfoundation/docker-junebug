@@ -22,6 +22,8 @@ container = JunebugContainer('junebug', create_kwargs={
         "80/tcp": None
     },
     'environment': {
+        'AUTH_USERNAME': 'guest',
+        'AUTH_PASSWORD': 'password',
         'AMQP_HOST': 'rabbitmq',
         'AMQP_VHOST': '/junebug',
         'REDIS_HOST': 'redis',

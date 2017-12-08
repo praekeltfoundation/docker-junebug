@@ -16,10 +16,7 @@ before_script:
   - docker pull "$IMAGE_NAME" || true
 script:
   - docker build --pull --cache-from "$IMAGE_NAME" --tag "$IMAGE_NAME" .
-  - docker-compose up -d && sleep 5
-  # The simplest possible test - Junebug returns 200/OK when we ask for channels
-  - curl -f --user guest:password http://localhost:8080/jb/channels/
-  - docker-compose down
+  - (cd seaworthy; pytest -v test.py)
 
 before_deploy:
   - pip install docker-ci-deploy==0.3.0

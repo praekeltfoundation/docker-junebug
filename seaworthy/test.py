@@ -1,26 +1,23 @@
 import pytest
 
-from seaworthy.logs import output_lines
+# from seaworthy.logs import output_lines
 
 from fixtures import *  # noqa: F401,F403
 
 
 class TestJunebugContainer:
 
-    def test_start(self, junebug_container):
+    def test_with_authentication(self, junebug_container):
+        client = junebug_container.http_client()
+        response = client.get("/jb/channels/", auth=('guest', 'password'))
+        assert response.status_code == 200
 
-        try:
-            client = junebug_container.http_client()
-            response = client.get("/jb/health")
+    def test_without_authentication(self, junebug_container):
+        client = junebug_container.http_client()
+        response = client.get("/jb/channels/")
+        assert response.status_code == 401
 
-            print(response)
-
-            assert response.status_code == 200
-        except Exception as msg:
-            print(msg)
-
-        logs = output_lines(junebug_container.get_logs(stderr=False))
-        for log in logs:
-            print(log)
-
-        assert False
+    def test_health(self, junebug_container):
+        client = junebug_container.http_client()
+        response = client.get("/jb/health")
+        assert response.status_code == 200
