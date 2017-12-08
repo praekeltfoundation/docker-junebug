@@ -1,6 +1,7 @@
 services:
   - docker
 language: python
+python: "3.6"
 
 env:
   global:
@@ -11,7 +12,10 @@ env:
     - VARIANT=
     - VARIANT=alpine
 
-install: [] # Don't do a pip install (default for Travis Python environment)
+before_install:
+  - pip install -U pip
+install:
+  - pip install -r seaworthy/requirements.txt
 
 before_script:
   - version="$(sed -nE 's/^junebug==([0-9\.]+)/\1/p' requirements.txt)"
@@ -21,11 +25,7 @@ before_script:
   - docker pull "$image_tag" || true
 script:
   - travis_retry docker build --pull --cache-from "$image_tag" --file "$dockerfile" --tag "$image_tag" .
-  - JUNEBUG_IMAGE="$image_tag" docker-compose up --no-build -d && sleep 5
-  # The simplest possible test - Junebug returns 200/OK when we ask for channels
-  - curl -f --user guest:password http://localhost:8080/jb/channels/
-  - curl -f http://localhost:8080/jb/health
-  - JUNEBUG_IMAGE="$image_tag" docker-compose down
+  - pytest -v seaworthy/test.py --duration=10
 after_script:
   - docker images
 
