@@ -14,8 +14,10 @@ class JunebugContainer(ContainerDefinition):
         super().__init__(name, self.IMAGE, self.WAIT_PATTERNS,
                          create_kwargs=create_kwargs)
 
-redis_fixture = resource_fixture(RedisContainer(), 'redis')
-rabbitmq_fixture = resource_fixture(RabbitMQContainer(), 'rabbitmq')
+redis_fixture = RedisContainer().pytest_fixture('redis')
+
+rabbitmq_container = RabbitMQContainer()
+rabbitmq_fixture = rabbitmq_container.pytest_fixture('rabbitmq')
 
 container = JunebugContainer('junebug', create_kwargs={
     'ports': {
@@ -24,8 +26,8 @@ container = JunebugContainer('junebug', create_kwargs={
     'environment': {
         'AUTH_USERNAME': 'guest',
         'AUTH_PASSWORD': 'password',
-        'AMQP_HOST': 'rabbitmq',
-        'AMQP_VHOST': '/junebug',
+        'AMQP_HOST': rabbitmq_container.name,
+        'AMQP_VHOST': rabbitmq_container.vhost,
         'REDIS_HOST': 'redis',
     }})
 
