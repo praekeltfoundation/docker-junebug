@@ -19,7 +19,7 @@ rabbitmq_fixture = resource_fixture(RabbitMQContainer(), 'rabbitmq')
 
 container = JunebugContainer('junebug', create_kwargs={
     'ports': {
-        '8080/tcp': ('127.0.0.1', '80'),
+        "80/tcp": None
     },
     'environment': {
         'AMQP_HOST': 'rabbitmq',
