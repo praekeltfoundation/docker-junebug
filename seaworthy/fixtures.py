@@ -5,7 +5,7 @@ from seaworthy.pytest.fixtures import resource_fixture
 
 
 class JunebugContainer(ContainerDefinition):
-    IMAGE = 'praekeltfoundation/junebug'
+    IMAGE = 'praekeltfoundation/junebug:alpine'
     WAIT_PATTERNS = (
         'Junebug is listening on',
     )
