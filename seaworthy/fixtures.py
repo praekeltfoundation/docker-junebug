@@ -1,17 +1,20 @@
+import pytest
+
 from seaworthy.containers.redis import RedisContainer
 from seaworthy.containers.rabbitmq import RabbitMQContainer
 from seaworthy.definitions import ContainerDefinition
 from seaworthy.pytest.fixtures import resource_fixture
 
+JUNEBUG_IMAGE = pytest.config.getoption("--junebug-image")
+
 
 class JunebugContainer(ContainerDefinition):
-    IMAGE = 'praekeltfoundation/junebug'
     WAIT_PATTERNS = (
         'Junebug is listening on',
     )
 
     def __init__(self, name, create_kwargs):
-        super().__init__(name, self.IMAGE, self.WAIT_PATTERNS,
+        super().__init__(name, JUNEBUG_IMAGE, self.WAIT_PATTERNS,
                          create_kwargs=create_kwargs)
 
 redis_fixture = RedisContainer().pytest_fixture('redis')
