@@ -25,7 +25,7 @@ before_script:
   - docker pull "$image_tag" || true
 script:
   - travis_retry docker build --pull --cache-from "$image_tag" --file "$dockerfile" --tag "$image_tag" .
-  - pytest -v seaworthy/test.py --duration=10
+  - pytest -v seaworthy/test.py --duration=10 --junebug-image="$image_tag"
 after_script:
   - docker images
 
