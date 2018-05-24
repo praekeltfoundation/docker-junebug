@@ -5,7 +5,7 @@ RUN apk add --no-cache libressl
 
 # We don't have the same choice of Nginx versions we have in Debian, but we
 # should specify the package version so we can update if necessary.
-ENV NGINX_VERSION 1.12.1-r0
+ENV NGINX_VERSION 1.12.2-r3
 RUN set -ex; \
     apk add --no-cache "nginx=$NGINX_VERSION"; \
 # Workaround for bug in Alpine Nginx package :-/
