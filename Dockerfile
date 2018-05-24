@@ -1,4 +1,5 @@
-FROM praekeltfoundation/vumi
+ARG VARIANT=jessie
+FROM praekeltfoundation/vumi-$VARIANT
 
 # Install a modern Nginx
 ENV NGINX_VERSION=1.14.0 \
