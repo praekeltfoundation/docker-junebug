@@ -1,4 +1,5 @@
-FROM praekeltfoundation/vumi:alpine
+ARG VARIANT=alpine
+FROM praekeltfoundation/vumi:$VARIANT
 
 # Need an OpenSSL thing to generate htpasswd files. This adds <1MB
 RUN apk add --no-cache libressl
