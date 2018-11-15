@@ -2,7 +2,7 @@ ARG VARIANT=stretch
 FROM praekeltfoundation/vumi:$VARIANT
 
 # Install a modern Nginx
-ENV NGINX_VERSION=1.14.0 \
+ENV NGINX_VERSION=1.14.1 \
     NGINX_GPG_KEY=573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
 RUN set -ex; \
     fetchDeps=" \
