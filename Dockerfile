@@ -1,4 +1,4 @@
-ARG VARIANT=jessie
+ARG VARIANT=stretch
 FROM praekeltfoundation/vumi:$VARIANT
 
 # Install a modern Nginx
