@@ -11,7 +11,6 @@ env:
   matrix:
     - VARIANT=jessie  TAG_DEFAULT=1
     - VARIANT=stretch TAG_DEFAULT=
-    - VARIANT=alpine  TAG_DEFAULT=  DOCKERFILE=alpine/Dockerfile
 
 before_install:
   - pip install -U pip
@@ -21,11 +20,10 @@ install:
 before_script:
   - version="$(sed -nE 's/^junebug==([0-9\.]+)/\1/p' requirements.txt)"
   - image_tag="$IMAGE_NAME:$VARIANT"
-  - dockerfile="${DOCKERFILE:-Dockerfile}"
-  - echo "Building image '$image_tag' from dockerfile '$dockerfile' for Junebug version '$version'..."
+  - echo "Building image '$image_tag' for Junebug version '$version'..."
   - docker pull "$image_tag" || true
 script:
-  - travis_retry docker build --pull --cache-from "$image_tag" --build-arg VARIANT="$VARIANT" -f "$dockerfile" -t "$image_tag" .
+  - travis_retry docker build --pull --cache-from "$image_tag" --build-arg VARIANT="$VARIANT" -t "$image_tag" .
   - pytest -v seaworthy/test.py --duration=10 --junebug-image="$image_tag"
 after_script:
   - docker images
