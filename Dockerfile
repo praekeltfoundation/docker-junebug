@@ -1,5 +1,5 @@
-ARG VARIANT
-FROM praekeltfoundation/vumi${VARIANT:+:$VARIANT}
+ARG VUMI_TAG
+FROM praekeltfoundation/vumi${VUMI_TAG:+:$VUMI_TAG}
 
 # Install a modern Nginx
 ENV NGINX_VERSION=1.14.2 \

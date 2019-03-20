@@ -8,8 +8,6 @@ env:
     - IMAGE_NAME=praekeltfoundation/junebug
     - REGISTRY_USER=praekeltorgdeploy
     - secure: "b6edRlN/D6k7Vqm3LGti9khu2zNV+BvQKQigBmzpTsjq/C2W1m82WN/+95Ck91jogFGPWndz+L6NKi1t1SefVHhJAvz8rC7drF7b1KcOx3fA8HVvkCsqOX3YEl27dCTA6TDna4decW3A+5MQn6l11ksIVPArRux9jLKPRbUUAsauUTYPZYQ7LaUXA/rW7IQWDegoGTUW0CXJwtT8xhrnmw814tG5j5DRPh4RXfw9uitCuBu2k6/g3fus2eX8FGZUzznLCqul4ruXECuIOFk+WZ4f3q3rauVy5CQsjleTJB3Iz+RiH9zRXZYmJVGr8gSoVCgdF3Bg1FBMeK1SRd7BjPPzV4XI8PgduDNwgXM4iBx7QJt8GM0ygYJWBN/mKZ8q4bGAD3bfPMemgPJmvJXPxhX/obEJb+3epbTq3I7iaF4+AgszZszBz62hmNtdpRCmXhZftcKTLnIcoEUfNxkYTlS78xcCv6rbsDHLf0O07WlRBE3pSJNhnwwykBVsAhEx3MFvxrVu6X3ut+/FEGky6vtN8GD1O/ibIfzw/C7d1uyGpjp/vvKDTOHb/oB8qj3ptql1KRHZIBWh5ZeUyblLH8k4cPKbk+PjJFqMhF72MgTdMzcKls1CrV/2VMnp//c8wAgDQN3e2aehkswqvu3rffWT9yxJg6EdHTITldJ9eJg="
-  matrix:
-    - VARIANT=stretch TAG_DEFAULT=1
 
 before_install:
   - pip install -U pip
@@ -18,12 +16,11 @@ install:
 
 before_script:
   - version="$(sed -nE 's/^junebug==([0-9\.]+)/\1/p' requirements.txt)"
-  - image_tag="$IMAGE_NAME:$VARIANT"
-  - echo "Building image '$image_tag' for Junebug version '$version'..."
-  - docker pull "$image_tag" || true
+  - echo "Building image '$IMAGE_NAME' for Junebug version '$version'..."
+  - docker pull "$IMAGE_NAME" || true
 script:
-  - docker build --pull --cache-from "$image_tag" --build-arg VARIANT="$VARIANT" -t "$image_tag" .
-  - pytest -v seaworthy/test.py --duration=10 --junebug-image="$image_tag"
+  - docker build --pull --cache-from "$IMAGE_NAME" -t "$IMAGE_NAME" .
+  - pytest -v seaworthy/test.py --duration=10 --junebug-image="$IMAGE_NAME"
 after_script:
   - docker images
 
@@ -32,6 +29,6 @@ before_deploy:
   - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
 deploy:
   provider: script
-  script: dcd --tag "$VARIANT" ${TAG_DEFAULT:+''} --version "$version" --version-latest --version-semver "$image_tag"
+  script: dcd --version "$version" --version-latest --version-semver "$IMAGE_NAME"
   on:
     branch: master
