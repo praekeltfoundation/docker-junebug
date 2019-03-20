@@ -1,8 +1,8 @@
-ARG VARIANT=stretch
-FROM praekeltfoundation/vumi:$VARIANT
+ARG VUMI_TAG
+FROM praekeltfoundation/vumi${VUMI_TAG:+:$VUMI_TAG}
 
 # Install a modern Nginx
-ENV NGINX_VERSION=1.14.1 \
+ENV NGINX_VERSION=1.14.2 \
     NGINX_GPG_KEY=573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
 RUN set -ex; \
     fetchDeps=" \
