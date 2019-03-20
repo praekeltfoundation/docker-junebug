@@ -1,5 +1,5 @@
-ARG VARIANT=stretch
-FROM praekeltfoundation/vumi:$VARIANT
+ARG VARIANT
+FROM praekeltfoundation/vumi${VARIANT:+$VARIANT}
 
 # Install a modern Nginx
 ENV NGINX_VERSION=1.14.1 \
