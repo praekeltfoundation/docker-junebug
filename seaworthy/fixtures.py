@@ -5,7 +5,7 @@ from seaworthy.containers.rabbitmq import RabbitMQContainer
 from seaworthy.definitions import ContainerDefinition
 from seaworthy.pytest.fixtures import resource_fixture
 
-JUNEBUG_IMAGE = pytest.config.getoption("--junebug-image")
+JUNEBUG_IMAGE = "praekeltfoundation/junebug"
 
 
 class JunebugContainer(ContainerDefinition):

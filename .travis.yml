@@ -20,7 +20,7 @@ before_script:
   - docker pull "$IMAGE_NAME" || true
 script:
   - docker build --pull --cache-from "$IMAGE_NAME" -t "$IMAGE_NAME" .
-  - pytest -v seaworthy/test.py --junebug-image="$IMAGE_NAME"
+  - pytest -v seaworthy/test.py
 after_script:
   - docker images
 
