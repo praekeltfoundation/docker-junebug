@@ -20,7 +20,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            ghcr.io/praekeltfoundation/junebug-base
+            ghcr.io/praekeltfoundation/junebug
           tags: |
             type=semver,pattern={{version}}
             type=sha,prefix={{branch}}-,enable=${{ github.ref_type != 'tag' }}
