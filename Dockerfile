@@ -1,6 +1,20 @@
-ARG VUMI_TAG
-FROM praekeltfoundation/vumi${VUMI_TAG:+:$VUMI_TAG}
+FROM ghcr.io/praekeltfoundation/pypy-base-nw:2-buster AS builder
 
+RUN apt-get update
+RUN apt-get -yy install build-essential libssl-dev libffi-dev
+
+RUN pip install --upgrade pip
+# We need the backport of the typing module to build Twisted.
+RUN pip install typing==3.10.0.0
+
+COPY requirements.txt /requirements.txt
+RUN pip wheel -w /wheels -r /requirements.txt
+
+
+FROM ghcr.io/praekeltfoundation/vumi-base:0.1.1
+MAINTAINER Praekelt Foundation <dev@praekeltfoundation.org>
+
+# TODO: Do we want a newer nginx?
 # Install a modern Nginx
 ENV NGINX_VERSION=1.14.2 \
     NGINX_GPG_KEY=573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
@@ -29,7 +43,8 @@ RUN set -ex; \
     ln -sf /dev/stderr /var/log/nginx/error.log
 
 COPY requirements.txt /requirements.txt
-RUN pip install -r /requirements.txt
+COPY --from=builder /wheels /wheels
+RUN pip install -f /wheels -r /requirements.txt
 
 COPY junebug-entrypoint.sh nginx/nginx-config-gen.sh \
     /scripts/
