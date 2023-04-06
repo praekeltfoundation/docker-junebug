@@ -1,3 +1,9 @@
+# Twisted dep, newer versions don't work with ancient Python.
+automat<22.10.0
+# Something in the dependency chain pulls in protobuf, which doesn't properly
+# specify version requirements.
+protobuf<3.20.0
+
 junebug==0.2.0
 vxyowsup==0.1.8
 yowsup2==2.5.2
