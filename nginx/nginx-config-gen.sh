@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 set -e
 
-NGINX_FILE="/etc/nginx/includes/junebug/junebug.conf"
+NGINX_DIR="/etc/nginx/includes/junebug"
+NGINX_FILE="${NGINX_DIR}/junebug.conf"
 HTPASSWD_FILE="/config/htpasswd"
 AUTH_BASIC="off"
 JUNEBUG_INTERFACE="${JUNEBUG_INTERFACE:-127.0.0.1}"
@@ -28,6 +29,8 @@ else
 *************************************************************
 EOF
 fi
+
+mkdir -p "$NGINX_DIR"
 
 cat > "$NGINX_FILE" <<EOF
 location /jb/ {

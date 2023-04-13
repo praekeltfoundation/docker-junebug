@@ -15,6 +15,8 @@ FROM ghcr.io/praekeltfoundation/vumi-base:0.1.1
 MAINTAINER Praekelt Foundation <dev@praekeltfoundation.org>
 
 RUN apt-get-install.sh nginx
+# Delete unwanted default server config.
+RUN rm /etc/nginx/sites-enabled/default
 
 COPY requirements.txt /requirements.txt
 COPY --from=builder /wheels /wheels
